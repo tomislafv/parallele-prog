@@ -22,7 +22,7 @@ public class Main {
     }
 
     private static void callerExample() {
-        ExecutorService tp = Executors.newFixedThreadPool(1);
+        ExecutorService tp = Executors.newCachedThreadPool();
         List<Callable<float[]>> sensorCallers = List.of(
                 new EV3ColorSensorCaller(SensorPort.S1),
                 new EV3TouchSensorCaller(SensorPort.S2),
@@ -30,7 +30,7 @@ public class Main {
                 new EV3UltrasonicSensorCaller(SensorPort.S4));
         List<Future<float[]>> futureList = sensorCallers.stream().map(tp::submit).collect(Collectors.toList());
         //Code der im Main-Thread ausgefuehrt wird
-        for(Future<float[]> actFuture : futureList) {
+        for (Future<float[]> actFuture : futureList) {
             try {
                 float[] sensorResult = actFuture.get();
                 System.out.println("Sensor-Result: " + Arrays.toString(sensorResult));
