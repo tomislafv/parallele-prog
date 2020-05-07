@@ -25,8 +25,6 @@ public class Child implements Runnable {
                 Thread.currentThread().interrupt();
                 break;
             }
-
         }
-
     }
 }

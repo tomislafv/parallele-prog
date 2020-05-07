@@ -1,11 +1,9 @@
 import lejos.hardware.Button;
 import lejos.hardware.port.SensorPort;
-import lejos.hardware.sensor.SensorConstants;
-import sensor.EV3ColorSensorCaller;
-import sensor.EV3TouchSensorCaller;
-import sensor.EV3UltrasonicSensorCaller;
+import sensor.caller.EV3ColorSensorCaller;
+import sensor.caller.EV3TouchSensorCaller;
+import sensor.caller.EV3UltrasonicSensorCaller;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.*;
