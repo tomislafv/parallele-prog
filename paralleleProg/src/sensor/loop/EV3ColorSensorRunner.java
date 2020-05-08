@@ -2,34 +2,44 @@ package sensor.loop;
 
 import lejos.hardware.port.Port;
 import lejos.hardware.sensor.EV3ColorSensor;
-import lejos.hardware.sensor.EV3TouchSensor;
 
 import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.Callable;
 
 
 public class EV3ColorSensorRunner implements Runnable {
 
-    final Port port;
-    final BlockingQueue<float[]> sensorQueue;
-    final long sleepMillis;
+    private final Port port;
+    private final EV3ColorSensor ev3ColorSensor;
+    private final BlockingQueue<float[]> sensorQueue;
+    private final long sleepMillis;
 
     public EV3ColorSensorRunner(Port port, BlockingQueue<float[]> sensorQueue, long sleepMillis) {
         this.port = port;
+        this.ev3ColorSensor = null;
+        this.sensorQueue = sensorQueue;
+        this.sleepMillis = sleepMillis;
+    }
+
+    public EV3ColorSensorRunner(EV3ColorSensor ev3ColorSensor, BlockingQueue<float[]> sensorQueue, long sleepMillis) {
+        this.port = null;
+        this.ev3ColorSensor = ev3ColorSensor;
         this.sensorQueue = sensorQueue;
         this.sleepMillis = sleepMillis;
     }
 
     @Override
     public void run() {
+        EV3ColorSensor ev3ColorSensor = this.ev3ColorSensor;
+        if (ev3ColorSensor == null) {
+            ev3ColorSensor = new EV3ColorSensor(port);
+        }
         while (!Thread.currentThread().isInterrupted()) {
-            EV3ColorSensor ev3ColorSensor = new EV3ColorSensor(port);
             float[] nextValue = new float[ev3ColorSensor.sampleSize()];
             ev3ColorSensor.fetchSample(nextValue, 0);
-            sensorQueue.add(nextValue);
             try {
+                sensorQueue.put(nextValue);
                 Thread.sleep(sleepMillis);
-            } catch (InterruptedException intExc) {
+            } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
                 break;
             }

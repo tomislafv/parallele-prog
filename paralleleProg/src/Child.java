@@ -21,7 +21,7 @@ public class Child implements Runnable {
 
             try {
                 Thread.sleep(1000);
-            } catch (InterruptedException intExc) {
+            } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
                 break;
             }

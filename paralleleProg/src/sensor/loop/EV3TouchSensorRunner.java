@@ -2,34 +2,44 @@ package sensor.loop;
 
 import lejos.hardware.port.Port;
 import lejos.hardware.sensor.EV3TouchSensor;
-import lejos.hardware.sensor.EV3UltrasonicSensor;
 
 import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.Callable;
 
 
 public class EV3TouchSensorRunner implements Runnable {
 
-    final Port port;
-    final BlockingQueue<float[]> sensorQueue;
-    final long sleepMillis;
+    private final Port port;
+    private final EV3TouchSensor ev3TouchSensor;
+    private final BlockingQueue<float[]> sensorQueue;
+    private final long sleepMillis;
 
     public EV3TouchSensorRunner(Port port, BlockingQueue<float[]> sensorQueue, long sleepMillis) {
         this.port = port;
+        this.ev3TouchSensor = null;
+        this.sensorQueue = sensorQueue;
+        this.sleepMillis = sleepMillis;
+    }
+
+    public EV3TouchSensorRunner(EV3TouchSensor ev3TouchSensor, BlockingQueue<float[]> sensorQueue, long sleepMillis) {
+        this.port = null;
+        this.ev3TouchSensor = ev3TouchSensor;
         this.sensorQueue = sensorQueue;
         this.sleepMillis = sleepMillis;
     }
 
     @Override
     public void run() {
+        EV3TouchSensor ev3TouchSensor = this.ev3TouchSensor;
+        if (ev3TouchSensor == null) {
+            ev3TouchSensor = new EV3TouchSensor(port);
+        }
         while (!Thread.currentThread().isInterrupted()) {
-            EV3TouchSensor ev3TouchSensor = new EV3TouchSensor(port);
             float[] nextValue = new float[ev3TouchSensor.sampleSize()];
             ev3TouchSensor.fetchSample(nextValue, 0);
-            sensorQueue.add(nextValue);
             try {
+                sensorQueue.put(nextValue);
                 Thread.sleep(sleepMillis);
-            } catch (InterruptedException intExc) {
+            } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
                 break;
             }
