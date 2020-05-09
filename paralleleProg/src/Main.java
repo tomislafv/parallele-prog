@@ -1,6 +1,12 @@
 public class Main {
 
     public static void main(String[] args) {
-        Example example = new Example();
+        try (Example example = new Example()) {
+            example.childExample();
+            example.callerExample();
+            example.runnerExample();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

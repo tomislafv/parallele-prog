@@ -8,20 +8,23 @@ import java.util.concurrent.BlockingQueue;
 
 public class EV3ColorSensorRunner implements Runnable {
 
-    private final Port port;
     private final EV3ColorSensor ev3ColorSensor;
     private final BlockingQueue<float[]> sensorQueue;
     private final long sleepMillis;
 
     public EV3ColorSensorRunner(Port port, BlockingQueue<float[]> sensorQueue, long sleepMillis) {
-        this.port = port;
-        this.ev3ColorSensor = null;
+        if (port == null) {
+            throw new IllegalArgumentException("Port can not be null!");
+        }
+        this.ev3ColorSensor = new EV3ColorSensor(port);
         this.sensorQueue = sensorQueue;
         this.sleepMillis = sleepMillis;
     }
 
     public EV3ColorSensorRunner(EV3ColorSensor ev3ColorSensor, BlockingQueue<float[]> sensorQueue, long sleepMillis) {
-        this.port = null;
+        if (ev3ColorSensor == null) {
+            throw new IllegalArgumentException("Sensor can not be null!");
+        }
         this.ev3ColorSensor = ev3ColorSensor;
         this.sensorQueue = sensorQueue;
         this.sleepMillis = sleepMillis;
@@ -30,9 +33,6 @@ public class EV3ColorSensorRunner implements Runnable {
     @Override
     public void run() {
         EV3ColorSensor ev3ColorSensor = this.ev3ColorSensor;
-        if (ev3ColorSensor == null) {
-            ev3ColorSensor = new EV3ColorSensor(port);
-        }
         while (!Thread.currentThread().isInterrupted()) {
             float[] nextValue = new float[ev3ColorSensor.sampleSize()];
             ev3ColorSensor.fetchSample(nextValue, 0);
