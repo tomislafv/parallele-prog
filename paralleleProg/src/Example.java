@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 
 public class Example implements AutoCloseable {
 
-    private final ExecutorService executorService;
+    private final ExecutorService executorService; //ExecutorService statt Thread direkt verwenden (besserer Stil und performanter)
 
     public Example() {
         executorService = Executors.newCachedThreadPool();
@@ -50,7 +50,7 @@ public class Example implements AutoCloseable {
         executorService.submit(ev3ColorSensorRunner);
         while (true) {
             try {
-                System.out.println(Arrays.toString(blockingQueue.take())); //Wartet bis ein Element verfügbar ist
+                System.out.println(Arrays.toString(blockingQueue.take())); //Wartet bis ein Element verfügbar ist, Synchronisation wird durch BlockieQueue realisiert
             } catch (InterruptedException e) {
                 e.printStackTrace();
                 break;
