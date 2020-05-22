@@ -8,7 +8,6 @@ import sensor.loop.EV3ColorSensorRunner;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.*;
-import java.util.stream.Collectors;
 
 public class Example implements AutoCloseable {
 
