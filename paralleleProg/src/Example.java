@@ -53,18 +53,18 @@ public class Example implements AutoCloseable {
         BlockingQueue<float[]> blockingQueue = new LinkedBlockingQueue<>(1);
         EV3ColorSensorRunner ev3ColorSensorRunner = new EV3ColorSensorRunner(SensorPort.S1, blockingQueue, 10);
         executorService.submit(ev3ColorSensorRunner);
-        while (true) {
+        while (!Thread.currentThread().isInterrupted()) {
             try {
                 System.out.println(Arrays.toString(blockingQueue.take())); //Wartet bis ein Element verfügbar ist, Synchronisation wird durch BlockieQueue realisiert
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                Thread.currentThread().interrupt();
                 break;
             }
         }
     }
 
     @Override
-    public void close() throws Exception {
+    public void close() {
         executorService.shutdown();
     }
 }
