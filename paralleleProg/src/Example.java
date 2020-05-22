@@ -64,7 +64,8 @@ public class Example implements AutoCloseable {
     }
 
     @Override
-    public void close() {
+    public void close() throws InterruptedException {
         executorService.shutdown();
+        executorService.awaitTermination(1, TimeUnit.SECONDS);
     }
 }
