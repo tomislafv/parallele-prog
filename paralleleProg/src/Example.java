@@ -32,7 +32,12 @@ public class Example implements AutoCloseable {
                 new EV3TouchSensorCaller(SensorPort.S2),
                 new EV3ColorSensorCaller(SensorPort.S3),
                 new EV3UltrasonicSensorCaller(SensorPort.S4));
-        List<Future<float[]>> futureList = sensorCallers.stream().map(executorService::submit).collect(Collectors.toList());
+        List<Future<float[]>> futureList;
+        try {
+            futureList = executorService.invokeAll(sensorCallers);
+        } catch (InterruptedException e) {
+            throw new IllegalStateException(e);
+        }
         //Code der im Main-Thread ausgefuehrt wird
         for (Future<float[]> actFuture : futureList) {
             try {
