@@ -5,7 +5,7 @@ import lejos.hardware.sensor.EV3TouchSensor;
 
 import java.util.concurrent.BlockingQueue;
 
-
+//Umsetzung des dauerhaften Lesens mit dem Touchsensor (Aufbau wie in ColorSensor)
 public class EV3TouchSensorRunner implements Runnable {
 
     private final EV3TouchSensor ev3TouchSensor;

@@ -5,6 +5,7 @@ import lejos.hardware.sensor.EV3UltrasonicSensor;
 
 import java.util.concurrent.Callable;
 
+//Umsetzung des Lesen eines Einzelwertes mit dem Ultraschallsensor (Aufbau wie in ColorSensor)
 public class EV3UltrasonicSensorCaller implements Callable<float[]> {
 
     private final EV3UltrasonicSensor ev3UltrasonicSensor;

@@ -5,6 +5,7 @@ import lejos.hardware.sensor.EV3TouchSensor;
 
 import java.util.concurrent.Callable;
 
+//Umsetzung des Lesen eines Einzelwertes mit dem Touchsensor (Aufbau wie in ColorSensor)
 public class EV3TouchSensorCaller implements Callable<float[]> {
 
     private final EV3TouchSensor ev3TouchSensor;

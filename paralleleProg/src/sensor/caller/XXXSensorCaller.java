@@ -5,6 +5,8 @@ import lejos.hardware.port.Port;
 import java.lang.reflect.InvocationTargetException;
 import java.util.concurrent.Callable;
 
+
+//Callable fuer beliebigen Sensor mit Reflection (-> hierdurch jedoch deutlich langsamer als die fuer konkrete Sensoren) (Aufbau wie in ColorSensor)
 public class XXXSensorCaller implements Callable<float[]> {
     private final Object sensor;
 
@@ -27,7 +29,7 @@ public class XXXSensorCaller implements Callable<float[]> {
     }
 
     @Override
-    public float[] call() throws Exception {
+    public float[] call() {
         Object sensor = this.sensor;
         float[] returnValue;
         try {
