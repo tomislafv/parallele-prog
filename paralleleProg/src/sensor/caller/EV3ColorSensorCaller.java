@@ -5,7 +5,7 @@ import lejos.hardware.sensor.EV3ColorSensor;
 
 import java.util.concurrent.Callable;
 
-//Umsetzung des Lesen eines Einzelwertes mit dem Farbsensor
+//Umsetzung des Lesens eines Einzelwertes mit dem Farbsensor
 public class EV3ColorSensorCaller implements Callable<float[]> {
 
     private final EV3ColorSensor ev3ColorSensor;

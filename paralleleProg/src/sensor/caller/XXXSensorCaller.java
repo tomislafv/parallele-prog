@@ -6,10 +6,13 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.concurrent.Callable;
 
 
-//Callable fuer beliebigen Sensor mit Reflection (-> hierdurch jedoch deutlich langsamer als die fuer konkrete Sensoren) (Aufbau wie in ColorSensor)
+//Callable fuer beliebigen Sensor mit Reflection
+//(-> hierdurch jedoch deutlich langsamer als die fuer konkrete Sensoren)
+//(Aufbau wie in ColorSensor)
 public class XXXSensorCaller implements Callable<float[]> {
     private final Object sensor;
 
+    //Nutzt in diesem Fall ein Objekt des No-Args-Konstruktors der uebergebenen (Sensor-)Klasse
     public XXXSensorCaller(Class<?> sensorClass, Port port) {
         if (port == null) {
             throw new IllegalArgumentException("Port can not be null!");
@@ -21,6 +24,7 @@ public class XXXSensorCaller implements Callable<float[]> {
         }
     }
 
+    //Nutzt in das uebergebenen Objekt der (Sensor-)Klasse
     public XXXSensorCaller(Object sensor) {
         if (sensor == null) {
             throw new IllegalArgumentException("Sensor can not be null!");

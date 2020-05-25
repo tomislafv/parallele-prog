@@ -5,7 +5,8 @@ import lejos.hardware.sensor.EV3UltrasonicSensor;
 
 import java.util.concurrent.BlockingQueue;
 
-//Umsetzung des dauerhaften Lesens mit dem Ultraschallsensor (Aufbau wie in ColorSensor)
+//Umsetzung des dauerhaften Lesens mit dem Ultraschallsensor
+//(Aufbau wie in ColorSensor)
 public class EV3UltrasonicSensorRunner implements Runnable {
 
     private final EV3UltrasonicSensor ev3UltrasonicSensor;

@@ -22,7 +22,7 @@ public class Child implements Runnable {
             LCD.drawString("Blue component: " + color[2], 0, 2);
 
             try {
-                Thread.sleep(1000); //Mit Sleep von einer Sekunde, das so performanter und aktuell genug
+                Thread.sleep(1000); //Mit Sleep von einer Sekunde, da so performanter und angezeigte Werte aktuell genug
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
                 break;

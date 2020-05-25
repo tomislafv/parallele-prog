@@ -12,7 +12,7 @@ import java.util.concurrent.*;
 //Beispiel-Klasse, die unsere Implementierungen nutzt
 public class Example implements AutoCloseable {
 
-    private final ExecutorService executorService; //ExecutorService, anstatt Thread direkt verwenden (besserer Stil und performanter)
+    private final ExecutorService executorService; //ExecutorService, anstatt Thread direkt verwenden (besserer Stil und performanter, da wiederverwendet)
 
     public Example() {
         executorService = Executors.newCachedThreadPool();

@@ -5,12 +5,15 @@ import lejos.hardware.port.Port;
 import java.lang.reflect.InvocationTargetException;
 import java.util.concurrent.BlockingQueue;
 
-//Runnable fuer beliebigen Sensor mit Reflection (-> hierdurch jedoch deutlich langsamer als die fuer konkrete Sensoren) (Aufbau wie in ColorSensor)
+//Runnable fuer beliebigen Sensor mit Reflection
+//(-> hierdurch jedoch deutlich langsamer als die fuer konkrete Sensoren)
+//(Aufbau wie in ColorSensor)
 public class XXXSensorRunner implements Runnable {
     private final Object sensor;
     private final BlockingQueue<float[]> sensorQueue;
     private final long sleepMillis;
 
+    //Nutzt in diesem Fall ein Objekt des No-Args-Konstruktors der uebergebenen (Sensor-)Klasse
     public XXXSensorRunner(Class<?> sensorClass, Port port, BlockingQueue<float[]> sensorQueue, long sleepMillis) {
         if (port == null) {
             throw new IllegalArgumentException("Port can not be null!");
@@ -24,6 +27,7 @@ public class XXXSensorRunner implements Runnable {
         this.sleepMillis = sleepMillis;
     }
 
+    //Nutzt in das uebergebenen Objekt der (Sensor-)Klasse
     public XXXSensorRunner(Object sensor, BlockingQueue<float[]> sensorQueue, long sleepMillis) {
         if (sensor == null) {
             throw new IllegalArgumentException("Sensor can not be null!");
